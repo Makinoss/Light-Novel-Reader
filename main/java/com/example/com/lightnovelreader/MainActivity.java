@@ -1,38 +1,34 @@
 package com.example.com.lightnovelreader;
 
-import android.app.FragmentManager;
-import android.app.FragmentTransaction;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
-import android.widget.TextView;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 
 public class MainActivity extends AppCompatActivity {
 
-    Intent invoker;
-    //FragmentManager fragmentManager;
-    //FragmentTransaction fragmentTransaction;
+    FragmentManager fragmentManager;
+    FragmentTransaction fragmentTransaction;
 
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
 
         @Override
         public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+            fragmentManager = getSupportFragmentManager();
+            fragmentTransaction = fragmentManager.beginTransaction();
             switch (item.getItemId()) {
                 case R.id.navigation_home:
-                    android.support.v4.app.FragmentManager fragmentManager = getSupportFragmentManager();
-                    android.support.v4.app.FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-                    HomeFragment homeFragment = new HomeFragment();
-                    fragmentTransaction.add(R.id.container, homeFragment);
-                    fragmentTransaction.commit();
+                    fragmentTransaction.replace(R.id.container, new HomeFragment()).commit();
                     return true;
-                case R.id.navigation_dashboard:
-                    //intent = new Intent();
+                case R.id.navigation_library:
+                    fragmentTransaction.replace(R.id.container, new LibraryFragment()).commit();
                     return true;
-                case R.id.navigation_notifications:
+                case R.id.navigation_searches:
                     return true;
             }
             return false;
